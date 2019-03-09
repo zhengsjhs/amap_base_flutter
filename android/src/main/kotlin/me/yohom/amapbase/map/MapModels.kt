@@ -7,7 +7,7 @@ import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import me.yohom.amapbase.common.hexStringToColorInt
 import java.util.*
-
+import me.yohom.amapbase.common.log
 
 /**
  * 由于高德的AMapOption被混淆了, 无法通过Gson直接反序列化, 这里用这个类过渡一下
@@ -182,9 +182,10 @@ class UnifiedMyLocationStyle(
         private val showMyLocation: Boolean
 ) {
     fun applyTo(map: AMap) {
+        log("applyTo -> $myLocationIcon")
         map.isMyLocationEnabled = showMyLocation
         map.myLocationStyle = MyLocationStyle()
-                .myLocationIcon(null)
+                .myLocationIcon(UnifiedAssets.getBitmapDescriptor(myLocationIcon))
                 .anchor(anchorU, anchorV)
                 .radiusFillColor(radiusFillColor.hexStringToColorInt()
                         ?: Color.argb(100, 0, 0, 180))
