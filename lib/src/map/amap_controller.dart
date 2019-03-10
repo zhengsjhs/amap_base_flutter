@@ -96,6 +96,10 @@ class AMapController {
     return _mapChannel.invokeMethod('marker#clear');
   }
 
+  Future clearMarker(@required LatLng target) {
+    return _mapChannel.invokeMethod('marker#clear', {'target': target.toJsonString()});
+  }
+
   Future clearMap() {
     return _mapChannel.invokeMethod('map#clear');
   }

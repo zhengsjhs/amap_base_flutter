@@ -369,7 +369,12 @@ object ClearMarker : MapMethodHandler {
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        map.mapScreenMarkers.forEach { it.remove() }
+        val targetJson = call.argument<String>("target") ?: "{}"
+        map.mapScreenMarkers.forEach {
+            if (it.getPosition().equals(targetJson.parseFieldJson<LatLng>())) {
+                it.remove()
+            }
+        }
 
         result.success(success)
     }
